@@ -6,13 +6,13 @@
         {% if user.is_superuser or user.is_staff %}
             <a class="btn btn-info btn-sm float-right" 
             href="/blog/create_post/" role="button">
-                <i class="fas fa-pen"></i>%&nbsp;New Post</a>
+                <i class="fas fa-pen"></i>&nbsp;New Post</a>
         {% endif %}
     {% endif %}
                 
     <h1>Blog
-        {% if category %}{{ category}}{{ category }}{% endif %}
-        {% if tag %}({{ tag.post_set.count }}){% endif %}
+        {% if category %}{{ category }}{% endif %}
+        {% if tag %}{{ tag }}({{ tag.post_set.count }}){% endif %}
     </h1>
     {% if post_list.exists %}
 
@@ -34,7 +34,7 @@
                     {% if p.hook_text %}
                         <h5 class="text-muted">{{ p.hook_text }}</h5>
                     {% endif %}
-                    <p class="card-text">{{ p.content | truncatewords:45 }}</p>
+                    <p class="card-text">{{ p.get_content_markdown | truncatewords_html:45 | safe }}</p>
 
                     {% if p.tags.exists %}
                         <i class="fas fa-tags"></i>
